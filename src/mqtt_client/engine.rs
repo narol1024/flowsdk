@@ -410,11 +410,13 @@ impl MqttEngine {
             );
             MqttPacket::Connect5(connect)
         } else {
-            let connect = connectv3::MqttConnect::new(
+            let mut connect = connectv3::MqttConnect::new(
                 self.options.client_id.clone(),
                 self.options.keep_alive,
                 self.options.clean_start,
             );
+            connect.username = self.options.username.clone();
+            connect.password = self.options.password.clone();
             MqttPacket::Connect3(connect)
         };
 
